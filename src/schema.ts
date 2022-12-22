@@ -20,7 +20,7 @@ type Mensaje {
 }
 
 type Query {
-  getMessages(page: String!, perPage: String!): Mensaje!
+  getMessages(page: Int!, perPage: Int!): [Mensaje!]!
 
 }
 

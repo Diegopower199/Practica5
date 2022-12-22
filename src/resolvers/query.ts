@@ -16,7 +16,7 @@ export const Query = {
 
         const mensajes: MensajeSchema[] | undefined = await MensajesCollection.find()
         .limit(args.perPage)
-        .skip((args.page - 1) * args.perPage)
+        .skip((args.page) * args.perPage)
         .toArray();
 
         if (!mensajes) {

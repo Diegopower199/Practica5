@@ -6,7 +6,7 @@ import { MensajesCollection, UsuarioCollection } from "../db/dbconnection.ts";
 import { Context, Mensaje, Usuario } from "../types.ts";
 
 export const Mutation = {
-  login: async (parent: unknown, args: { username: string; password: string },): Promise<string> => {
+  login: async (_: unknown, args: { username: string; password: string },): Promise<string> => {
     try {
       const user: UsuarioSchema | undefined = await UsuarioCollection.findOne({
         username: args.username,
@@ -43,7 +43,7 @@ export const Mutation = {
     }
   },
 
-  createUser: async (parent: unknown, args: { username: string; password: string }, ctx: Context,): Promise<Usuario> => {
+  createUser: async (_: unknown, args: { username: string; password: string }, ctx: Context,): Promise<Usuario> => {
     try {
       const usuarioUsernameEncontrado = await UsuarioCollection.findOne({
         username: args.username,
@@ -79,7 +79,7 @@ export const Mutation = {
     }
   },
 
-  deleteUser: async (parent: unknown, args: {}, ctx: Context,): Promise<Usuario> => {
+  deleteUser: async (_: unknown, args: {}, ctx: Context,): Promise<Usuario> => {
     try {
       if (ctx.token === null) {
         throw new Error("Error, este usuario no esta autentificado");
@@ -111,7 +111,7 @@ export const Mutation = {
     }
   },
 
-  sendMessage: async (parent: unknown, args: { destinatario: string; menssage: string }, ctx: Context,): Promise<Mensaje> => {
+  sendMessage: async (_: unknown, args: { destinatario: string; menssage: string }, ctx: Context,): Promise<Mensaje> => {
     try {
       if (ctx.token === null) {
         throw new Error("Error, este usuario no esta autenticado");
