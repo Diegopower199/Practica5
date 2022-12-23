@@ -1,11 +1,9 @@
 import { MensajesCollection } from "../db/dbconnection.ts";
 import { MensajeSchema } from "../db/schema.ts";
-import { Mensaje } from "../types.ts";
-import { Context } from "../types.ts";
 
 
 export const Query = {
-    getMessages:  async (parent: unknown, args: { page: number; perPage: number }): Promise<Mensaje[]> => {
+    getMessages:  async (parent: unknown, args: { page: number; perPage: number }): Promise<MensajeSchema[]> => {
         if (args.page < 0) {
             throw new Error ("Error, la pagina no puede ser negativa");
         }
@@ -24,7 +22,7 @@ export const Query = {
         }
 
         return mensajes.map((mensaje: MensajeSchema) => ({
-            id: mensaje.toString(),
+            _id: mensaje._id,
             emisor: mensaje.emisor, 
             receptor: mensaje.receptor, 
             idioma: mensaje.idioma, 

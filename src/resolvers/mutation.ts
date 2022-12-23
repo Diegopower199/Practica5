@@ -1,7 +1,7 @@
 import { ObjectId } from "mongo";
 import * as bcrypt from "bcrypt";
 import { createJWT, verifyJWT } from "../lib/jwt.ts";
-import { UsuarioSchema } from "../db/schema.ts";
+import { MensajeSchema, UsuarioSchema } from "../db/schema.ts";
 import { MensajesCollection, UsuarioCollection } from "../db/dbconnection.ts";
 import { Context, Mensaje, Usuario } from "../types.ts";
 
@@ -43,7 +43,7 @@ export const Mutation = {
     }
   },
 
-  createUser: async (_: unknown, args: { username: string; password: string }, ctx: Context,): Promise<Usuario> => {
+  createUser: async (_: unknown, args: { username: string; password: string }, ctx: Context,): Promise<UsuarioSchema> => {
     try {
       const usuarioUsernameEncontrado = await UsuarioCollection.findOne({
         username: args.username,
@@ -68,7 +68,7 @@ export const Mutation = {
       });
 
       return {
-        id: id.toString(),
+        _id: id,
         username: args.username,
         fechaCreacion: fecha,
         idioma: idioma,
@@ -79,7 +79,7 @@ export const Mutation = {
     }
   },
 
-  deleteUser: async (_: unknown, args: {}, ctx: Context,): Promise<Usuario> => {
+  deleteUser: async (_: unknown, args: {}, ctx: Context,): Promise<UsuarioSchema> => {
     try {
       if (ctx.token === null) {
         throw new Error("Error, este usuario no esta autentificado");
@@ -101,7 +101,7 @@ export const Mutation = {
       }
 
       return {
-        id: encontrarUsuario?._id.toString(),
+        _id: encontrarUsuario?._id,
         username: encontrarUsuario?.username,
         fechaCreacion: encontrarUsuario?.fechaCreacion,
         idioma: encontrarUsuario?.idioma,
@@ -111,7 +111,7 @@ export const Mutation = {
     }
   },
 
-  sendMessage: async (_: unknown, args: { destinatario: string; menssage: string }, ctx: Context,): Promise<Mensaje> => {
+  sendMessage: async (_: unknown, args: { destinatario: string; menssage: string }, ctx: Context,): Promise<MensajeSchema> => {
     try {
       if (ctx.token === null) {
         throw new Error("Error, este usuario no esta autenticado");
@@ -163,7 +163,7 @@ export const Mutation = {
       });
 
       return {
-        id: id.toString(),
+        _id: id,
         emisor: encontrarUsuarioEmisor._id.toString(),
         receptor: args.destinatario,
         idioma: ctx.lang,
