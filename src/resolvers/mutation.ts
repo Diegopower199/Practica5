@@ -45,7 +45,7 @@ export const Mutation = {
 
   createUser: async (_: unknown, args: { username: string; password: string }, ctx: Context,): Promise<UsuarioSchema> => {
     try {
-      const usuarioUsernameEncontrado = await UsuarioCollection.findOne({
+      const usuarioUsernameEncontrado: UsuarioSchema | undefined = await UsuarioCollection.findOne({
         username: args.username,
       });
 
@@ -60,15 +60,17 @@ export const Mutation = {
       const fecha = new Date();
       const idioma = ctx.lang || "es";
 
-      const id = await UsuarioCollection.insertOne({
+      const _id: ObjectId = await UsuarioCollection.insertOne({
         username: args.username,
         password: passwordEncriptada,
         fechaCreacion: fecha,
         idioma: idioma,
       });
 
+
+
       return {
-        _id: id,
+        _id: _id,
         username: args.username,
         fechaCreacion: fecha,
         idioma: idioma,

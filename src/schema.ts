@@ -4,9 +4,8 @@ export const typeDefs = gql`
 type Usuario {
   id: ID!
   username: String!
-  email: String!
-  name: String!
-  surname: String!
+  idioma: String!
+  fechaCreacion: String!
   token: String
 }
 
@@ -15,13 +14,12 @@ type Mensaje {
   emisor: String!
   receptor: String!
   idioma: String!
-  fechaCreacionMensaje: String
+  fechaCreacionMensaje: String!
   contenido: String!
 }
 
 type Query {
   getMessages(page: Int!, perPage: Int!): [Mensaje!]!
-
 }
 
 type Mutation {
