@@ -5,7 +5,7 @@ import { MensajeSchema } from "../db/schema.ts";
 export const Query = {
     getMessages:  async (parent: unknown, args: { page: number; perPage: number }): Promise<MensajeSchema[]> => {
         if (args.page <= 0) {
-            throw new Error ("Error, la pagina no puede ser negativa");
+            throw new Error ("Error, la pagina no puede ser negativa o igual a 0");
         }
 
         if (args.perPage < 10 || args.perPage > 200) {
