@@ -4,7 +4,7 @@ import { MensajeSchema } from "../db/schema.ts";
 
 export const Query = {
     getMessages:  async (parent: unknown, args: { page: number; perPage: number }): Promise<MensajeSchema[]> => {
-        if (args.page < 0) {
+        if (args.page <= 0) {
             throw new Error ("Error, la pagina no puede ser negativa");
         }
 
@@ -14,7 +14,7 @@ export const Query = {
 
         const mensajes: MensajeSchema[] | undefined = await MensajesCollection.find()
         .limit(args.perPage)
-        .skip(0)
+        .skip(args.perPage * (args.page - 1))
         .toArray();
 
         if (!mensajes) {

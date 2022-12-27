@@ -8,7 +8,6 @@ await config({ export: true, allowEmptyValues: true });
 import { Query } from "./resolvers/query.ts";
 import { Mutation } from "./resolvers/mutation.ts";
 import { typeDefs } from "./schema.ts";
-import { Context } from "./types.ts";
 import { Mensaje } from "./resolvers/Mensaje.ts";
 import { Usuario } from "./resolvers/Usuario.ts";
 
